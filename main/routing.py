@@ -1,11 +1,9 @@
 from django.conf.urls import url
 
-
+from main import consumers
 
 websocket_urlpatterns = [
     # request status change
-    url(r'^ws/request/(?P<request_id>[-\w\d]+)/$', consumers.RequestConsumer),
+    url(r'^ws/stock/(?P<user_id>[-\w\d]+)/$', consumers.StockUser),
     # new request
-    url(r'^ws/driver/requests/(?P<driver_id>[-\w\d]+)/$', consumers.DriverConsumer),
 ]
-

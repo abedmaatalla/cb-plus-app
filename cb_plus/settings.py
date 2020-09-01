@@ -33,13 +33,13 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 YOUR_APPS = [
     'main',
-]
-INSTALLED_APPS = [
     'rest_framework',
     'dynamic_rest',
     'drf_yasg',
     'django_filters',
     'channels',
+]
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -134,6 +134,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+    },
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

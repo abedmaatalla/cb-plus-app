@@ -5,4 +5,5 @@ class MainConfig(AppConfig):
     name = 'main'
 
     def ready(self):
-        import signals
+        # import main.signals
+        pass

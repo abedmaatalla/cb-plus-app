@@ -4,7 +4,7 @@ from django.core import serializers
 from django.utils.timezone import now
 
 
-class StockUser(AsyncJsonWebsocketConsumer):
+class StockUserSync(AsyncJsonWebsocketConsumer):
     user = None
     room_name = None
 

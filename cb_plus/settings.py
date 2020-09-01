@@ -33,13 +33,13 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 YOUR_APPS = [
     'main',
+]
+INSTALLED_APPS = [
     'rest_framework',
     'dynamic_rest',
     'drf_yasg',
     'django_filters',
-    'channels'
-]
-INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

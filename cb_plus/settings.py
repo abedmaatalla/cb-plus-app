@@ -27,7 +27,7 @@ DEBUG = True
 
 ASGI_APPLICATION = 'cb_plus.routing.application'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

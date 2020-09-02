@@ -11,6 +11,7 @@ pip install -r requirements
 ```
 
 ## API 
+* Filter with (product__id, expired_at)
 
 ```
 /api/doc/

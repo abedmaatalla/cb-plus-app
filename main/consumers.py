@@ -48,31 +48,42 @@ class StockUserSync(AsyncJsonWebsocketConsumer):
             action 
         """
         if "stock_dict" in event and "action_at" in event and "action" in event:
-            if "id" in event['stock_dict']:
-                from main.models import SyncRecord
-                sync_records = SyncRecord.objects.filter(record_id=event['stock_dict']['id'], action_at__gte=event['action_at'])
+            from main.models import Stock
+            from main.models import SyncRecord
+            if "server_id" in event['stock_dict']:
+
+                sync_records = SyncRecord.objects.filter(record_id=event['stock_dict']['server_id'], action_at__gte=event['action_at'])
                 if not sync_records:
-                    SyncRecord.objects.filter(record_id=event['stock_dict']['id'], action_at__lte=event['action_at']).update(
+                    SyncRecord.objects.filter(record_id=event['stock_dict']['server_id'], action_at__lte=event['action_at']).update(
                         synced_at=now())
-                    from main.models import Stock
-                    stock = Stock.objects.filter(id=event['stock_dict']['id']).first()
-                    if stock:
-                        if event['action'] == "CREATE":
-                            print("create")
-                            await self.send_json(
-                                {"message": "Successfully synced", "error": False})
-                            return
+
+                    stock = Stock.objects.filter(id=event['stock_dict']['server_id'])
+                    if stock and event['action'] in ["CREATE", "UPDATE", "DELETE"]:
                         if event['action'] == "UPDATE":
                             print('update')
-
+                            data = {}
+                            if "product_id" in event['stock_dict']:
+                                data.update({'product_id': event['stock_dict']['product_id']})
+                            if "expired_at" in event['stock_dict']:
+                                data.update({'expired_at': event['stock_dict']['expired_at']})
+                            print(data)
+                            stock.update(**data)
                             await self.send_json(
                                 {"message": "Successfully synced", "error": False})
                             return
                         if event['action'] == "DELETE":
                             print("delete")
+                            stock.delete()
                             await self.send_json(
                                 {"message": "Successfully synced", "error": False})
                             return
+            else:
+                if event['action'] == "CREATE":
+                    print("create")
+                    await self.send_json(
+                        {"message": "Successfully synced", "error": False})
+                    Stock.objects.create(**event['stock_dict'])
+                    return
 
         await self.send_json({"message": "there is newer data in server. Please sync from server", "error": True})
 

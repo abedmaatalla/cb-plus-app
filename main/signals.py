@@ -20,10 +20,14 @@ def stock_save_notification(sender, instance, created, **kwargs):
         request_type = "stock.create"
 
     for candidate in candidates:
-        async_to_sync(channel_layer.group_send)(
-            "STOCK{}".format(candidate.id),
-            {"type": "stock", "content": {"stock_id": str(instance.id), "action": request_type}}
-        )
+        try:
+            async_to_sync(channel_layer.group_send)(
+                "STOCK{}".format(candidate.id),
+                {"type": "stock", "content": {"stock_id": str(instance.id), "action": request_type}}
+            )
+        except:
+            print("error")
+
         SyncRecord.objects.create(
             content_type=ContentType.objects.get(model='stock'),
             record_id=instance.id,
@@ -34,20 +38,23 @@ def stock_save_notification(sender, instance, created, **kwargs):
 
 
 @receiver(pre_delete, sender=Stock, dispatch_uid="stock_delete_notification")
-def stock_delete_notification(sender, instance, created, **kwargs):
+def stock_delete_notification(sender, instance, **kwargs):
     channel_layer = get_channel_layer()
 
     candidates = User.objects.all()
     request_type = "stock.delete"
 
     for candidate in candidates:
-        async_to_sync(channel_layer.group_send)(
-            "STOCK{}".format(candidate.id),
-            {"type": "stock", "content": {"stock_id": str(instance.id), "action": request_type}}
-        )
-        
+        try:
+            async_to_sync(channel_layer.group_send)(
+                "STOCK{}".format(candidate.id),
+                {"type": "stock", "content": {"stock_id": str(instance.id), "action": request_type}}
+            )
+        except:
+            print("error")
+
         SyncRecord.objects.create(
-            content_type=instance.model_class(),
+            content_type=ContentType.objects.get(model='stock'),
             record_id=instance.id,
             user=candidate,
             data=instance.__dict__,

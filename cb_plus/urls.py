@@ -21,7 +21,6 @@ from rest_framework import routers, permissions
 from main import views
 from drf_yasg import openapi
 
-import views
 
 schema_view = get_schema_view(
    openapi.Info(

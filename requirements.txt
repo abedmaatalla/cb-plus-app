@@ -62,3 +62,4 @@ libsass
 django-sass-processor
 googlemaps
 django-allauth
+ django-crispy-forms

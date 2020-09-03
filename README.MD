@@ -26,7 +26,7 @@ pip install -r requirements
 #### Endpoint
 
 ```
-ws/stock/{user_id}
+(wss/ws)://host/ws/stock/{user_id}
 ```
 #### Usage
 * By connecting to socket you will recieve all updates in realtime.

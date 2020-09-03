@@ -8,7 +8,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from django.views.generic import CreateView, UpdateView, ListView
 
-from forms import ProductForm, StockForm
+from main.forms import ProductForm, StockForm
 from main.models import Stock, Product
 from main.serializer import StockSerializer, ProductSerializer
 

@@ -21,6 +21,8 @@ from rest_framework import routers, permissions
 from main import views
 from drf_yasg import openapi
 
+import views
+
 schema_view = get_schema_view(
    openapi.Info(
       title="CB+ API",
@@ -40,4 +42,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/doc/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/public/', include(public_router.urls)),
+
+    path('', views.StockReadingListView.as_view(), name='stock_reading_list'),
+
+    path('products/', views.ProductListView.as_view(), name='product_list'),
+    path('products/add/', views.ProductCreateView.as_view(), name='product_add'),
+    path('products/<pk>/edit/', views.ProductUpdateView.as_view(), name='product_edit'),
+
+    path('stocks/', views.StockListView.as_view(), name='stock_list'),
+    path('stocks/add/', views.StockCreateView.as_view(), name='stock_add'),
+    path('stocks/<int:pk>/edit/', views.StockUpdateView.as_view(), name='stock_edit'),
 ]

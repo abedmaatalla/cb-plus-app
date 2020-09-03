@@ -1,0 +1,31 @@
+{% extends 'layouts/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="d-flex justify-content-between">
+    <h4>Products list</h4>
+        <a href="{% url 'product_add' %}" class="btn btn-primary">+ Add</a>
+    </div>
+
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Stock history</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for product in products %}
+    <tr>
+      <th scope="row">{{ product.id }}</th>
+      <td>{{ product.name }}</td>
+      <td><a href="{% url 'stock_list' %}?product__id={{ product.id }}">Stock History Link</a> </td>
+      <td><a href="{% url 'product_edit' pk=product.id %}" class="btn btn-primary">Edit</a> <a href="" class="btn btn-danger">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

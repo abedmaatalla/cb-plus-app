@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="d-flex justify-content-between">
+    <h4>Stock reading list</h4>
+    </div>
+
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Product</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Expiration date</th>
+      <th scope="col">Stock history</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for reading in stock_list %}
+    <tr>
+      <th scope="row">{{ reading.id }}</th>
+      <td>#{{ reading.product.id }} - {{ reading.product.name }}</td>
+        <td>{{ reading.duration }}</td>
+      <td>{{ reading.expired_at|date:"Y-m-d" }} </td>
+      <td><a href="{% url 'stock_list' %}?product__id={{ reading.product.id }}">Stock History Link</a> </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

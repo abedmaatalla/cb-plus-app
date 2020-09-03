@@ -2,6 +2,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
+from django.urls import reverse
 from django.utils.timezone import now
 import uuid
 from main.constants import SYNC_ACTIONS
@@ -11,11 +12,16 @@ class Product(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
     name = models.CharField(max_length=128, blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse('product_list')
+
 
 class Stock(models.Model):
     id = models.AutoField(primary_key=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     expired_at = models.DateField()
+    def get_absolute_url(self):
+        return reverse('stock_list')
 
 
 class SyncRecord(models.Model):

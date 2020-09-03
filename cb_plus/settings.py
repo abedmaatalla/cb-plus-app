@@ -38,6 +38,7 @@ YOUR_APPS = [
     'drf_yasg',
     'django_filters',
     'channels',
+    'crispy_forms',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -144,6 +145,8 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

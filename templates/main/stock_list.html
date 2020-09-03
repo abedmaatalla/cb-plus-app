@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-between">
+    <h4>Stocks list</h4>
+        <a href="{% url 'stock_add' %}" class="btn btn-primary">+ Add</a>
+    </div>
+
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Product</th>
+      <th scope="col">Expiration date</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for stock in stocks %}
+    <tr>
+      <th scope="row">{{ stock.id }}</th>
+      <td>#{{ stock.product.id }} - {{ stock.product.name }}</td>
+      <td>{{ stock.expired_at|date:"Y-m-d" }} </td>
+      <td><a href="{% url 'stock_edit' pk=stock.id %}" class="btn btn-primary">Edit</a> <a href="" class="btn btn-danger">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
